@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet
+RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree
 
 # Set timezone to CST
 ENV TZ=Australia/Sydney
@@ -12,21 +12,34 @@ WORKDIR /usr/workspace
 
 # ========= java 8 ========
 
-RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 \
-    && chmod +x ./jq \
-    && mv jq /usr/bin
+RUN yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
-RUN wget -O jdk8.json https://lv.binarybabel.org/catalog-api/java/jdk8.json
+RUN echo "export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))" > /etc/profile.d/java8.sh
+RUN echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile.d/java8.sh
+RUN echo "export CLASSPATH=.:\$JAVA_HOME/jre/lib:\$JAVA_HOME/lib:\$JAVA_HOME/lib/tools.jar" >> /etc/profile.d/java8.sh
 
-RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "$(cat jdk8.json | jq -r .downloads.tgz)" -O jdk-8-linux-x64.tar.gz
-RUN tar xzf jdk-8-linux-x64.tar.gz; mkdir -p /usr/java; mv jdk1.8.0_$(cat jdk8.json | jq -r .version_parsed.minor) /usr/java; ln -s /usr/java/jdk1.8.0_$(cat jdk8.json | jq -r .version_parsed.minor) /usr/java/latest; ln -s /usr/java/latest /usr/java/default
+RUN source /etc/profile.d/java8.sh
 
-RUN alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1
-RUN alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 1
+RUN alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 1
+RUN alternatives --install /usr/bin/javac javac $JAVA_HOME/bin/javac 1
 
-ENV JAVA_HOME /usr/java/latest
+# --- replace the above with this section for oracle java 8 ---
 
-RUN rm -f jdk-8-linux-x64.tar.gz; rm -f jdk8.json
+#RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 \
+#    && chmod +x ./jq \
+#    && mv jq /usr/bin
+
+#RUN wget -O jdk8.json https://lv.binarybabel.org/catalog-api/java/jdk8.json
+
+#RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "$(cat jdk8.json | jq -r .downloads.tgz)" -O jdk-8-linux-x64.tar.gz
+#RUN tar xzf jdk-8-linux-x64.tar.gz; mkdir -p /usr/java; mv jdk1.8.0_$(cat jdk8.json | jq -r .version_parsed.minor) /usr/java; ln -s /usr/java/jdk1.8.0_$(cat jdk8.json | jq -r .version_parsed.minor) /usr/java/latest; ln -s /usr/java/latest /usr/java/default
+
+#RUN alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1
+#RUN alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 1
+
+#ENV JAVA_HOME /usr/java/latest
+
+#RUN rm -f jdk-8-linux-x64.tar.gz; rm -f jdk8.json
 
 
 # ========= sonar ========
