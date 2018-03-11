@@ -1,0 +1,11 @@
+SONAR_HOST_URL=http://localhost:9000
+SONAR_LOGIN=<token>
+SONAR_PROJECTNAME_PREFIX=github ::
+SONAR_SOURCES=/usr/workspace/clone/src
+SONAR_GITHUB_REPOSITORY=<org>/<repo>
+SONAR_ANALYSIS_MODE=preview
+SONAR_GITHUB_OAUTH=<github personal access token>
+GIT_CLONE=https://github.com/<org>/<repo>.git
+GIT_PR_BRANCHNAME=<branch>
+GIT_PR_ID=<pull request number>
+BUILD_TYPE=<nodejs|maven|gradle>
