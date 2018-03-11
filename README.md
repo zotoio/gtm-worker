@@ -1,4 +1,5 @@
 # GTM Worker
+[![Docker Build Status](https://img.shields.io/docker/build/zotoio/gtm-worker.svg)](https://hub.docker.com/r/zotoio/gtm-worker)
 
 A general purpose docker image for execution by [Github Task Manager](https://github.com/wyvern8/github-task-manager) agents using the Docker Executor.  Tools such as nodejs, maven, java, gradle and sonar-scanner are baked in.
 
