@@ -9,7 +9,11 @@ To execute standalone adhoc builds and test runs, driven by environment variable
 The Github Task Manager Docker executor can pull a docker image, and run it with a set of environment vars and an adhoc command.  This docker image incorporates a number of common tools that are useful for build and test executions.
 
 ## Install
-The image is intended to be used by Github Task Manager, meaning no direct install is required.  To run it locally for experimentation, create a `.env` file base on `.envSample` and:
+The image is intended to be used by Github Task Manager, meaning no direct install is required.
+
+Follow the guide [here](https://github.com/wyvern8/github-task-manager/wiki/Structure-of-.githubTaskManager.json#docker-options) for implementation steps using the `zotoio/gtm-worker` docker image.
+
+To run it locally for experimentation, create a `.env` file base on `.envSample` and:
 
 ```
 docker run -it --env-file .env --net=host  zotoio/gtm-worker /bin/bash
