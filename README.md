@@ -34,12 +34,12 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |SONAR_LOGIN|access token from SonarQube|
 |SONAR_PROJECTNAME_PREFIX| prefix to append for display in sonarqube - not used for pull requests |
 |SONAR_SOURCES| default is /usr/workspace/clone/src which is in the default checkout location|
-|SONAR_GITHUB_REPOSITORY| git <org>/<repo>|
+|SONAR_GITHUB_REPOSITORY| git org/repo|
 |SONAR_ANALYSIS_MODE| preview used for pull requests |
 |SONAR_GITHUB_OAUTH| github personal access token|
-|GIT_CLONE| git clone uri eg, https://github.com/<org>/<repo>.git|
+|GIT_CLONE| git clone uri eg, https://github.com/org/repo.git|
 |GIT_PR_BRANCHNAME| branch name from PR event|
 |GIT_PR_ID| pull request number from PR event|
-|BUILD_TYPE|<nodejs or maven or gradle>|
+|BUILD_TYPE|nodejs or maven or gradle|
 |BUILD_COMMAND|custom build command rather than derived from build type|
 
