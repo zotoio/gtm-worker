@@ -40,6 +40,6 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |GIT_CLONE| git clone uri eg, https://github.com/<org>/<repo>.git|
 |GIT_PR_BRANCHNAME| branch name from PR event|
 |GIT_PR_ID| pull request number from PR event|
-|BUILD_TYPE|<nodejs\|maven\|gradle>|
+|BUILD_TYPE|<nodejs or maven or gradle>|
 |BUILD_COMMAND|custom build command rather than derived from build type|
 
