@@ -85,8 +85,8 @@ RUN yum install -y wget && wget http://archive.apache.org/dist/maven/maven-3/$MA
 # https://github.com/keeganwitt/docker-gradle/blob/1fcbfdaa2566e3cf3fb055fbd1342f2aa462bb85/jdk8/Dockerfile
 
 RUN mkdir -p /opt/gradle
-ENV GRADLE_HOME /opt/gradle
 ENV GRADLE_VERSION 4.6
+ENV GRADLE_HOME /opt/gradle/gradle-${GRADLE_VERSION}
 
 ARG GRADLE_DOWNLOAD_SHA256=98bd5fd2b30e070517e03c51cbb32beee3e2ee1a84003a5a5d748996d4b1b915
 RUN set -o errexit -o nounset \
@@ -99,7 +99,7 @@ RUN set -o errexit -o nounset \
 	&& echo "Installing Gradle" \
 	&& unzip gradle.zip \
 	&& rm gradle.zip \
-	&& mv "gradle-${GRADLE_VERSION}" "${GRADLE_HOME}/" \
+	&& mv "gradle-${GRADLE_VERSION}" "/opt/gradle/" \
 	&& ln -s "${GRADLE_HOME}/bin/gradle" /usr/bin/gradle
 
 
@@ -109,6 +109,8 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh
     && export NVM_DIR="$HOME/.nvm" \
     && . "$NVM_DIR/nvm.sh" \
     && nvm install --lts
+
+ENV PATH /root/.nvm/versions/node/v8.10.0/bin:$PATH
 
 
 # ========= ssh =========
