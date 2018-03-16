@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree
+RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree bzip2
 
 # Set timezone to CST
 ENV TZ=Australia/Sydney
