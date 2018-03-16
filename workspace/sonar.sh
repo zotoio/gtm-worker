@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /usr/workspace
+cd /usr/workspace/clone
 
 echo ">>> sonar scan.."
 if [[ -n $SONAR_SOURCES ]]; then
@@ -12,3 +12,5 @@ else
                     -Dsonar.projectKey=${SONAR_GITHUB_REPOSITORY/\//-} \
                     -Dsonar.projectName="$SONAR_PROJECTNAME_PREFIX${SONAR_GITHUB_REPOSITORY/\// :: }"
 fi
+
+cd /usr/workspace
