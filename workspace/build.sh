@@ -14,7 +14,7 @@ else
 
             maven)
                 echo ">>> running maven build.."
-                mvn compile
+                mvn clean package
                 ;;
 
             gradle)
