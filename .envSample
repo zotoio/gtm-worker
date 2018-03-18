@@ -1,7 +1,8 @@
 SONAR_HOST_URL=http://localhost:9000
 SONAR_LOGIN=<token>
 SONAR_PROJECTNAME_PREFIX=github ::
-SONAR_SOURCES=/usr/workspace/clone/src
+SONAR_SOURCES=src
+SONAR_JAVA_BINARIES=target
 SONAR_GITHUB_REPOSITORY=<org>/<repo>
 SONAR_ANALYSIS_MODE=preview
 SONAR_GITHUB_OAUTH=<github personal access token>
