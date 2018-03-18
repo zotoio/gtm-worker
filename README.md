@@ -33,7 +33,9 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |SONAR_HOST_URL| eg. http://localhost:9000 |
 |SONAR_LOGIN|access token from SonarQube|
 |SONAR_PROJECTNAME_PREFIX| prefix to append for display in sonarqube - not used for pull requests |
-|SONAR_SOURCES| default is /usr/workspace/clone/src which is in the default checkout location|
+|SONAR_SOURCES| default is 'src' which is in the default checkout location|
+|SONAR_JAVA_BINARIES| default is 'target' which is in the default checkout location|
+|SONAR_MODULES| optional comma separated list of modules. sonar will look for source and target within each|
 |SONAR_GITHUB_REPOSITORY| git org/repo eg. zotoio/gtm-agent|
 |SONAR_ANALYSIS_MODE| 'preview' used for pull requests |
 |SONAR_GITHUB_OAUTH| github personal access token|
