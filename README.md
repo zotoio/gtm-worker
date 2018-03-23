@@ -30,18 +30,19 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 
 | Environment variable | description |
 | -------------------- | ----------- |
-|SONAR_HOST_URL| eg. http://localhost:9000 |
-|SONAR_LOGIN|access token from SonarQube|
-|SONAR_PROJECTNAME_PREFIX| prefix to append for display in sonarqube - not used for pull requests |
-|SONAR_SOURCES| default is 'src' which is in the default checkout location|
-|SONAR_JAVA_BINARIES| default is 'target' which is in the default checkout location|
-|SONAR_MODULES| optional comma separated list of modules. sonar will look for source and target within each|
-|SONAR_GITHUB_REPOSITORY| git org/repo eg. zotoio/gtm-agent|
-|SONAR_ANALYSIS_MODE| 'preview' used for pull requests |
-|SONAR_GITHUB_OAUTH| github personal access token|
-|GIT_CLONE| git clone uri eg, https://github.com/org/repo.git|
-|GIT_PR_BRANCHNAME| branch name from PR event|
-|GIT_PR_ID| pull request number from PR event|
-|BUILD_TYPE|nodejs or maven or gradle|
-|BUILD_COMMAND|custom build command rather than derived from build type|
+|SONAR_HOST_URL| e.g. http://localhost:9000 |
+|SONAR_LOGIN| Access token from SonarQube|
+|SONAR_PROJECTNAME_PREFIX| Prefix to append for display in sonarqube - not used for pull requests |
+|SONAR_SOURCES| Default is 'src' which is in the default checkout location|
+|SONAR_JAVA_BINARIES| Default is 'target' which is in the default checkout location|
+|SONAR_MODULES| Optional comma separated list of modules. sonar will look for source and target within each|
+|SONAR_GITHUB_REPOSITORY| GitHub org/repo e.g. `zotoio/gtm-agent`|
+|SONAR_ANALYSIS_MODE| Sonar Scan Mode. 'preview' used for pull requests |
+|SONAR_GITHUB_OAUTH| GitHub personal access token|
+|SONAR_GITHUB_ENDPOINT| GitHub API URL e.g. `https://api.github.com`
+|GIT_CLONE| Git clone uri e.g. `https://github.com/org/repo.git`|
+|GIT_PR_BRANCHNAME| Branch name from PR event|
+|GIT_PR_ID| GitHub pull request number from PR event|
+|BUILD_TYPE| `nodejs`, `maven`, or `gradle`|
+|BUILD_COMMAND| Custom build command rather than derived from build type|
 
