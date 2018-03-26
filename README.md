@@ -39,6 +39,7 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |SONAR_GITHUB_REPOSITORY| git org/repo eg. zotoio/gtm-agent|
 |SONAR_ANALYSIS_MODE| 'preview' used for pull requests |
 |SONAR_GITHUB_OAUTH| github personal access token|
+|SONAR_KEEP_PROJECT_PROPERTIES| If not `true`, delete any `sonar-project.properties` files in repo|
 |GIT_CLONE| git clone uri eg, https://github.com/org/repo.git|
 |GIT_PR_BRANCHNAME| branch name from PR event|
 |GIT_PR_ID| pull request number from PR event|
