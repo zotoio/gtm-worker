@@ -2,6 +2,9 @@
 
 cd /usr/workspace/clone
 
+# Delete Sonar Properties as they Clash with the Pull Request Scan
+rm -f sonar-project.properties
+
 if [[ -n $SONAR_MODULES ]]; then
     SONAR_MODULES_PARAM=" -Dsonar.modules=$SONAR_MODULES "
 fi
