@@ -4,6 +4,6 @@ cd /usr/workspace
 
 # clone repo
 echo ">>> cloning repo.."
-git clone $GIT_CLONE clone
+git clone --recursive $GIT_CLONE clone
 
 
