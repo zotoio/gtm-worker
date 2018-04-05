@@ -26,3 +26,5 @@ case "$BUILD_TYPE" in
                 exit 1; fi
             ;;
 esac
+
+cd /usr/workspace/

@@ -11,6 +11,15 @@ if [[ -n $SONAR_MODULES ]]; then
     SONAR_MODULES_PARAM=" -Dsonar.modules=$SONAR_MODULES "
 fi
 
+# Test for Binaries and Sources Directories
+if [[ ! -d "$SONAR_JAVA_BINARIES" ]]; then
+    echo ">>> No Binaries Directory. Exiting..."
+    exit 1;
+elif [[ ! -d "$SONAR_SOURCES" ]]; then
+    echo ">>> No Sources Directory. Exiting..."
+    exit 1;
+fi
+
 echo ">>> sonar scan.."
 if [[ -n $SONAR_SOURCES ]]; then
     sonar-scanner -X -Dsonar.sources=$SONAR_SOURCES $SONAR_MODULES_PARAM \
