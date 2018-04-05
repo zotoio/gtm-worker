@@ -4,7 +4,7 @@ cd /usr/workspace/clone
 
 if [ -n "$BUILD_COMMAND" ]; then
     echo ">>> running custom build commmand.."
-    exec "$BUILD_COMMAND"
+    eval "$BUILD_COMMAND"
 else
     case "$BUILD_TYPE" in
             nodejs)
