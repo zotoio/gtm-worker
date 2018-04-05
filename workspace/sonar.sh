@@ -20,7 +20,7 @@ fi
 #    echo ">>> No Binaries Directory. Exiting..."
 #    exit 1;
 #el
-if [[ ! -d "$SONAR_SOURCES" ]]; then
+if [[ ! -d "$SONAR_MODULES/$SONAR_SOURCES" ]]; then
     echo ">>> No Sources Directory. Exiting..."
     exit 1;
 fi
