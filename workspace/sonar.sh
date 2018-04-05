@@ -8,14 +8,19 @@ if [[ ! $SONAR_KEEP_PROJECT_PROPERTIES = 'true' ]]; then
 fi
 
 if [[ -n $SONAR_MODULES ]]; then
+    if [[ ! -d "$SONAR_MODULES" ]]; then
+        echo ">>> No Modules Directory. Exiting..."
+        exit 1;
+    fi
     SONAR_MODULES_PARAM=" -Dsonar.modules=$SONAR_MODULES "
 fi
 
 # Test for Binaries and Sources Directories
-if [[ ! -d "$SONAR_JAVA_BINARIES" ]]; then
-    echo ">>> No Binaries Directory. Exiting..."
-    exit 1;
-elif [[ ! -d "$SONAR_SOURCES" ]]; then
+#if [[ ! -d "$SONAR_JAVA_BINARIES" ]]; then
+#    echo ">>> No Binaries Directory. Exiting..."
+#    exit 1;
+#el
+if [[ ! -d "$SONAR_SOURCES" ]]; then
     echo ">>> No Sources Directory. Exiting..."
     exit 1;
 fi
