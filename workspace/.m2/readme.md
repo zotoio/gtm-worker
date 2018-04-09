@@ -1,0 +1,1 @@
+you can place a settings.xml file for maven here
