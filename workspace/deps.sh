@@ -4,6 +4,15 @@
 
 cd /usr/workspace/clone
 
+if [[ -z "$BUILD_TYPE" ]]; then
+    if [[ -f 'pom.xml' ]]; then
+        BUILD_TYPE='maven'
+    fi
+    if [[ -f 'build.gradle' ]]; then
+        BUILD_TYPE='gradle'
+    fi
+fi
+
 case "$BUILD_TYPE" in
         nodejs)
             echo ">>> Checking for package.json..."
