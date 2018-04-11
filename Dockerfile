@@ -10,8 +10,13 @@ RUN mkdir -p /usr/workspace
 WORKDIR /usr/workspace
 
 
-# ========= java 8 =========
+# ========= AWS SDK ========
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+RUN unzip awscli-bundle.zip
+RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
+
+# ========= java 8 =========
 RUN yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 RUN echo "export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))" > /etc/profile.d/java8.sh
