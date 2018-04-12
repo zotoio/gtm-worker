@@ -1,8 +1,13 @@
 FROM centos:7
 
-RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree bzip2
+RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree bzip2 yum-utils device-mapper-persistent-data lvm2
 
-# Set timezone to CST
+# ========= DOCKER ========
+RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+RUN yum install -y docker-ce
+RUN systemctl enable docker
+
+# ====== Set timezone to AEDT
 ENV TZ=Australia/Sydney
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
