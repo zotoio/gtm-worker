@@ -7,15 +7,6 @@ if [ -n "$BUILD_COMMAND" ]; then
     eval "$BUILD_COMMAND"
 else
 
-    if [[ -z "$BUILD_TYPE" ]]; then
-        if [[ -f 'pom.xml' ]]; then
-            BUILD_TYPE='maven'
-        fi
-        if [[ -f 'build.gradle' ]]; then
-            BUILD_TYPE='gradle'
-        fi
-    fi
-
     case "$BUILD_TYPE" in
             nodejs)
                 echo ">>> running node build.."
@@ -32,6 +23,17 @@ else
                 gradle build
                 ;;
     esac
+fi
+
+# store dependency bundle if new
+if [[ "$S3_DEPENDENCY_BUCKET" != "" ]]; then
+    echo "DEPS_FOUND=$DEPS_FOUND"
+    if [[ "$DEPS_FOUND" != "true" ]]; then
+        echo ">>> packaging dependency bundle: deps-$DEPS_SUM.tar.gz from $DEPS_DIR"
+        tar -czf deps-$DEPS_SUM.tar.gz -C "$DEPS_DIR" .
+        echo ">>> uploading dependency bundle to s3: deps-$DEPS_SUM.tar.gz"
+        aws s3api put-object --bucket $S3_DEPENDENCY_BUCKET --key deps-$DEPS_SUM.tar.gz --body deps-$DEPS_SUM.tar.gz
+    fi
 fi
 
 cd /usr/workspace/
