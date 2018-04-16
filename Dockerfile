@@ -118,9 +118,11 @@ RUN set -o errexit -o nounset \
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
     && export NVM_DIR="$HOME/.nvm" \
     && . "$NVM_DIR/nvm.sh" \
-    && nvm install --lts
+    && nvm install 8.11.1
 
-ENV PATH /root/.nvm/versions/node/v8.10.0/bin:$PATH
+ENV PATH /root/.nvm/versions/node/v8.11.1/bin:$PATH
+
+RUN npm install -g typescript
 
 
 # ========= ssh =========
