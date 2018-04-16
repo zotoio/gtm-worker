@@ -1,18 +1,25 @@
 FROM centos:7
 
+
+# ====== TIMEZONE
+ENV TZ=Australia/Sydney
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
+# ====== WORKSPACE =======
+RUN mkdir -p /usr/workspace
+WORKDIR /usr/workspace
+ADD VERSION .
+
+
+# ====== YUM PACKAGES ======
 RUN yum update -y && yum install -y wget curl grep sed unzip git bash make ca-certificates telnet which tree bzip2 yum-utils device-mapper-persistent-data lvm2
+
 
 # ========= DOCKER ========
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install -y docker-ce
 RUN systemctl enable docker
-
-# ====== Set timezone to AEDT
-ENV TZ=Australia/Sydney
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN mkdir -p /usr/workspace
-WORKDIR /usr/workspace
 
 
 # ========= AWS SDK ========
@@ -21,7 +28,7 @@ RUN unzip awscli-bundle.zip
 RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 
-# ========= java 8 =========
+# ========= JAVA 8 =========
 RUN yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 RUN echo "export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))" > /etc/profile.d/java8.sh
@@ -52,7 +59,7 @@ RUN alternatives --install /usr/bin/javac javac $JAVA_HOME/bin/javac 1
 #RUN rm -f jdk-8-linux-x64.tar.gz; rm -f jdk8.json
 
 
-# ========= sonar ========
+# ========= SONAR ========
 # https://github.com/newtmitch/docker-sonar-scanner/blob/master/Dockerfile.sonarscanner-3.0.3-full
 
 ENV SONAR_SCANNER_VERSION 3.0.3.778
@@ -73,7 +80,7 @@ ENV SONAR_RUNNER_HOME=/opt/sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
 ENV PATH $PATH:/opt/sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux/bin
 
 
-# ========= maven ========
+# ========= MAVEN ========
 # https://github.com/Zenika/alpine-maven/blob/master/jdk8/Dockerfile
 
 #RUN find /usr/share/ca-certificates/mozilla/ -name "*.crt" -exec keytool -import -trustcacerts \
@@ -91,7 +98,7 @@ RUN yum install -y wget && wget http://archive.apache.org/dist/maven/maven-3/$MA
   mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
 
 
-# ========= gradle ========
+# ========= GRADLE ========
 # https://github.com/keeganwitt/docker-gradle/blob/1fcbfdaa2566e3cf3fb055fbd1342f2aa462bb85/jdk8/Dockerfile
 
 RUN mkdir -p /opt/gradle
@@ -113,7 +120,7 @@ RUN set -o errexit -o nounset \
 	&& ln -s "${GRADLE_HOME}/bin/gradle" /usr/bin/gradle
 
 
-# ========= node ========
+# ========= NODE ========
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
     && export NVM_DIR="$HOME/.nvm" \
@@ -125,7 +132,7 @@ ENV PATH /root/.nvm/versions/node/v8.11.1/bin:$PATH
 RUN npm install -g typescript
 
 
-# ========= ssh =========
+# ========= SSH =========
 RUN ssh-keygen -t rsa -b 4096 -f /root/.ssh/id_rsa -q -n ""
 RUN eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa
 RUN echo "eval \$(ssh-agent -s)" >> /root/.bashrc
