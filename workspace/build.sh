@@ -11,6 +11,7 @@ else
             nodejs)
                 echo ">>> running node build.."
                 npm set strict-ssl false
+                npm install typescript --save
                 npm install && npm run build
                 ;;
 

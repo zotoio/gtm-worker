@@ -128,8 +128,6 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh
 
 ENV PATH /root/.nvm/versions/node/v8.11.1/bin:$PATH
 
-RUN npm install -g typescript
-
 
 # ========= SSH =========
 RUN ssh-keygen -t rsa -b 4096 -f /root/.ssh/id_rsa -q -n ""
