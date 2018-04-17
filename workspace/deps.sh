@@ -67,6 +67,7 @@ echo "DEPS_SUM=$DEPS_SUM"
 echo "DEPS_DIR=$DEPS_DIR"
 echo "AWS_S3_PROXY=$AWS_S3_PROXY"
 echo "S3_DEPENDENCY_BUCKET=$S3_DEPENDENCY_BUCKET"
+echo "IAM_ENABLED=$IAM_ENABLED"
 
 # creds
 if [[ "$IAM_ENABLED" != "true" ]]; then
