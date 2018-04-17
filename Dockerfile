@@ -128,6 +128,10 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh
 
 ENV PATH /root/.nvm/versions/node/v8.11.1/bin:$PATH
 
+# for sonar scanner
+RUN npm install -g typescript
+ENV NODE_PATH /root/.nvm/versions/node/v8.11.1/lib/node_modules
+
 
 # ========= SSH =========
 RUN ssh-keygen -t rsa -b 4096 -f /root/.ssh/id_rsa -q -n ""
