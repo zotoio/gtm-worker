@@ -11,7 +11,7 @@ else
             nodejs)
                 echo ">>> running node build.."
                 npm set strict-ssl false
-                npm install && npm run build
+                npm install --verbose && npm run build
                 ;;
 
             maven)
