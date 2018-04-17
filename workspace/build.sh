@@ -10,6 +10,7 @@ else
     case "$BUILD_TYPE" in
             nodejs)
                 echo ">>> running node build.."
+                npm set strict-ssl false
                 npm install && npm run build
                 ;;
 
