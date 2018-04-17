@@ -16,3 +16,4 @@ GTM_AWS_REGION=<redacted>
 GTM_AWS_ACCESS_KEY_ID=<redacted>
 GTM_AWS_SECRET_ACCESS_KEY=<redacted>
 IAM_ENABLED=
+AWS_S3_PROXY=<redacted>
