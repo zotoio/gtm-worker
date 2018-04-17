@@ -9,7 +9,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # ====== WORKSPACE =======
 RUN mkdir -p /usr/workspace
 WORKDIR /usr/workspace
-ADD VERSION .
 
 
 # ====== YUM PACKAGES ======
