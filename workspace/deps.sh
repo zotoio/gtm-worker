@@ -54,11 +54,12 @@ if [[ "$BUILD_TYPE" == "gradle" ]]; then
 
 elif [[ "$BUILD_TYPE" == "maven" ]]; then
     # recursive find all pom.xml generate single hash of hashes
-    DEPS_SUM=`find . -type f -name pom -exec md5sum "{}" + | sort | md5sum | awk '{ print $1 }'`
+    DEPS_SUM=`find . -type f -name pom.xml -exec md5sum "{}" + | sort | md5sum | awk '{ print $1 }'`
     DEPS_DIR="/root/.m2/repository"
 
 elif [[ "$BUILD_TYPE" == "nodejs" ]]; then
-    DEPS_SUM=`md5sum package.json | awk '{ print $1 }'`
+    # recursive find all package.json generate single hash of hashes
+    DEPS_SUM=`find . -type f -name package.json -exec md5sum "{}" + | sort | md5sum | awk '{ print $1 }'`
     DEPS_DIR="/usr/workspace/clone/node_modules"
 fi
 
