@@ -1,7 +1,7 @@
 # GTM Worker
 [![Docker Build Status](https://img.shields.io/docker/build/zotoio/gtm-worker.svg)](https://hub.docker.com/r/zotoio/gtm-worker)
 
-A general purpose docker image for execution by [Github Task Manager](https://github.com/wyvern8/github-task-manager) agents using the Docker Executor.  Tools such as nodejs, maven, java, gradle and sonar-scanner are baked in.
+A general purpose docker image for execution by [Github Task Manager](https://github.com/zotoio/github-task-manager) agents using the Docker Executor.  Tools such as nodejs, maven, java, gradle and sonar-scanner are baked in.
 
 ## Why?
 To execute standalone adhoc builds and test runs, driven by environment variables passed in from GTM Agents servicing pull request hooks, without the overhead of managing external CI jobs.
@@ -12,7 +12,7 @@ The Github Task Manager Docker executor can pull a docker image, and run it with
 ## Install
 The image is intended to be used by Github Task Manager, meaning no direct install is required.
 
-Follow the guide [here](https://github.com/wyvern8/github-task-manager/wiki/Structure-of-.githubTaskManager.json#docker-options) for implementation steps using the `zotoio/gtm-worker` docker image.
+Follow the guide [here](https://github.com/zotoio/github-task-manager/wiki/Structure-of-.githubTaskManager.json#docker-options) for implementation steps using the `zotoio/gtm-worker` docker image.
 
 To run it locally for experimentation, create a `.env` file base on `.envSample` and:
 
