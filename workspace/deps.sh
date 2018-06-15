@@ -89,7 +89,7 @@ if [[ "$S3_DEPENDENCY_BUCKET" != "" ]]; then
         echo ">>> downloading deps-$DEPS_SUM.tar.gz"
         https_proxy=$AWS_S3_PROXY aws s3api get-object --bucket $S3_DEPENDENCY_BUCKET --key deps-$DEPS_SUM.tar.gz deps-$DEPS_SUM.tar.gz
         echo ">>> unpacking deps-$DEPS_SUM.tar.gz to $DEPS_DIR"
-        tar -xzf deps-$DEPS_SUM.tar.gz -C "$DEPS_DIR"
+        tar --warning=no-timestamp -xzf deps-$DEPS_SUM.tar.gz -C "$DEPS_DIR"
     fi
 fi
 
