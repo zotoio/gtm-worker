@@ -27,7 +27,7 @@ echo "looks like we need to deploy $SLS_AFFECTED_PACKAGES .."
 export IFS=","
 for pack in $SLS_AFFECTED_PACKAGES; do
     cd /usr/workspace/clone/packages/$pack
-    yarn sls-deploy
+    yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME
 done
 
 echo "ALL DEPLOYS SUCCESSFUL"
