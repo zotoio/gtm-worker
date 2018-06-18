@@ -25,9 +25,27 @@ source ./build.sh
 echo "looks like we need to deploy $SLS_AFFECTED_PACKAGES .."
 
 export IFS=","
-for pack in $SLS_AFFECTED_PACKAGES; do
-    cd /usr/workspace/clone/packages/$pack
-    yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME
-done
+mkdir -p /usr/workspace/clone/output
 
-echo "ALL DEPLOYS SUCCESSFUL"
+if [[ "$SLS_DEPLOY_MODE" = "sequential" ]]; then
+    for PACKAGE in $SLS_AFFECTED_PACKAGES; do
+        cd /usr/workspace/clone/packages/PACKAGE
+        yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME
+    done
+    echo "ALL DEPLOYS SUCCESSFUL"
+
+else
+    # default is to deploy function in parallel - up to 9 simultaneously
+    for PACKAGE in ${SLS_AFFECTED_PACKAGES[*]}; do echo ${PACKAGE}^${GTM_EVENT_ID}^${GIT_PUSH_BRANCHNAME}; done | xargs -I{} --max-procs 9 ./serverless-deploy.sh {}
+    cat /usr/workspace/clone/output/*-summary.txt
+    echo "ALL DEPLOYS SUCCESSFUL"
+fi
+
+# store output
+if [[ "$S3_DEPENDENCY_BUCKET" != "" ]]; then
+    echo ">>> packaging deployment output: output-$GTM_EVENT_ID.tar.gz from output dir.."
+    tar -czf output-$GTM_EVENT_ID.tar.gz -C /usr/workspace/clone/output .
+    echo ">>> uploading output to s3://$S3_DEPENDENCY_BUCKET/output/output-$GTM_EVENT_ID.tar.gz"
+    https_proxy=$AWS_S3_PROXY aws s3api put-object --bucket $S3_DEPENDENCY_BUCKET --key output/output-$GTM_EVENT_ID.tar.gz --body output-$GTM_EVENT_ID.tar.gz
+fi
+

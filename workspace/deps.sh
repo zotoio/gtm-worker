@@ -82,12 +82,12 @@ fi
 
 # retrieve dependency bundle
 if [[ "$S3_DEPENDENCY_BUCKET" != "" ]]; then
-    if [[ `https_proxy=$AWS_S3_PROXY aws s3 ls s3://$S3_DEPENDENCY_BUCKET/deps-$DEPS_SUM.tar.gz` ]]; then
-        echo ">>> found dependency bundle in s3: deps-$DEPS_SUM.tar.gz"
+    if [[ `https_proxy=$AWS_S3_PROXY aws s3 ls s3://$S3_DEPENDENCY_BUCKET/deps/deps-$DEPS_SUM.tar.gz` ]]; then
+        echo ">>> found dependency bundle in s3://$S3_DEPENDENCY_BUCKET/deps/deps-$DEPS_SUM.tar.gz"
         DEPS_FOUND="true"
         mkdir -p $DEPS_DIR
         echo ">>> downloading deps-$DEPS_SUM.tar.gz"
-        https_proxy=$AWS_S3_PROXY aws s3api get-object --bucket $S3_DEPENDENCY_BUCKET --key deps-$DEPS_SUM.tar.gz deps-$DEPS_SUM.tar.gz
+        https_proxy=$AWS_S3_PROXY aws s3api get-object --bucket $S3_DEPENDENCY_BUCKET --key deps/deps-$DEPS_SUM.tar.gz deps-$DEPS_SUM.tar.gz
         echo ">>> unpacking deps-$DEPS_SUM.tar.gz to $DEPS_DIR"
         tar --warning=no-timestamp -xzf deps-$DEPS_SUM.tar.gz -C "$DEPS_DIR"
     fi
