@@ -5,6 +5,7 @@ PACKVARS=$1
 PACKAGE=$(echo $PACKVARS | cut -f1 -d^);
 GTM_EVENT_ID=$(echo $PACKVARS | cut -f2 -d^);
 GIT_PUSH_BRANCHNAME=$(echo $PACKVARS | cut -f3 -d^);
+SLS_AWS_STAGE=$(echo $PACKVARS | cut -f4 -d^);
 echo 'Deploying package' $PACKAGE '..';
 cd /usr/workspace/clone/packages/$PACKAGE;
 OUTPUT_FILENAME=`date +%Y-%m-%d-%H%M%S`-${GTM_EVENT_ID:0:8}-$PACKAGE-output.txt;
