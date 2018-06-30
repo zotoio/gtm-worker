@@ -30,7 +30,12 @@ export BUILD_COMMAND=yarn
 source ./deps.sh
 source ./build.sh
 
-echo
+if [[ "$SLS_AFFECTED_PACKAGES" == "" ]]; then
+    echo "no package deploys directly required"
+    echo "ALL DEPLOYS SUCCESSFUL"
+    exit 0
+fi
+
 echo "looks like we need to deploy $SLS_AFFECTED_PACKAGES .."
 
 export IFS=","
