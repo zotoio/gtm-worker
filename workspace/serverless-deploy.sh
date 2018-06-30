@@ -11,6 +11,12 @@ cd /usr/workspace/clone/packages/$PACKAGE;
 OUTPUT_FILENAME=`date +%Y-%m-%d-%H%M%S`-${GTM_EVENT_ID:0:8}-$PACKAGE-output.txt;
 #echo $OUTPUT_FILENAME;
 yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME > /usr/workspace/clone/output/${OUTPUT_FILENAME} 2>&1;
+if [[ -f 'artillery.yml' ]]; then
+    echo 'Running artillery perf test';
+    yarn sls-perf > /usr/workspace/clone/output/perf-${OUTPUT_FILENAME} 2>&1;
+    yarn sls-perf-report  >> /usr/workspace/clone/output/perf-${OUTPUT_FILENAME} 2>&1;
+    cat /usr/workspace/clone/output/perf-${OUTPUT_FILENAME} 2>&1;
+fi
 cat /usr/workspace/clone/output/${OUTPUT_FILENAME};
 SUMMARY_FILENAME=${GTM_EVENT_ID:0:8}-summary.txt;
 echo '### ' $PACKAGE ' tail #############' >> /usr/workspace/clone/output/${SUMMARY_FILENAME};
