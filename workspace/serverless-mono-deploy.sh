@@ -33,6 +33,8 @@ source ./build.sh
 if [[ "$SLS_AFFECTED_PACKAGES" == "" ]]; then
     echo "no package deploys directly required"
     echo "ALL DEPLOYS SUCCESSFUL"
+    END=`date +%s`
+    echo "Execution time was `expr $END - $START` seconds."
     exit 0
 fi
 
