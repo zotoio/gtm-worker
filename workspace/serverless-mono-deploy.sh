@@ -94,6 +94,8 @@ else
     done | xargs -I{} --max-procs 4 ./serverless-deploy.sh {} || handle_error
 fi
 
+cd /usr/workspace
+
 cat ${OUTDIR}/*-summary.txt
 
 show_summary

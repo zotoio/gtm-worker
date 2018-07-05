@@ -18,8 +18,15 @@ ERR_FILE=${OUTDIR}/${OUTPUT_FILENAME_BASE}-error.txt
 PERF_FILE=${OUTDIR}/${OUTPUT_FILENAME_BASE}-perf.txt
 SUMMARY_FILE=${OUTDIR}/${GTM_EVENT_ID:0:8}-summary.txt;
 
+# print evaluated config
+if grep -q "sls-print" /usr/workspace/clone/packages/$PACKAGE/package.json; then
+    yarn sls-print >> $OUTDIR/$PACKAGE-sls.yml 2>&1 || echo "failed printing config for $PACKAGE..";
+else
+    echo "npm script for printing config of $PACKAGE is missing"
+fi
+
 # perform deployment
-yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME > ${OUT_FILE} 2>&1 || echo "failed $PACKAGE..";
+yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
 
 # run performance test
 if [[ -f 'artillery.yml' ]]; then
@@ -35,10 +42,17 @@ fi
 cat ${OUT_FILE};
 echo '### ' $PACKAGE ' tail #############' >> ${SUMMARY_FILE};
 tail -25 ${OUT_FILE} >> ${SUMMARY_FILE};
+
 if grep -q "error Command failed with exit code" ${OUT_FILE}; then
     cp ${OUT_FILE} ${ERR_FILE}
     echo 'FAILURE: ' $PACKAGE >> ${OUT_FILE};
     exit 1;
+else
+    # package up if master branch
+    if [[ -f /usr/workspace/package-release.sh ]] && [[ "$GIT_PUSH_BRANCHNAME" = "master" ]]; then
+        source /usr/workspace/package-release.sh $PACKAGE >> ${OUT_FILE} 2>&1 || echo "package failed $PACKAGE"
+    fi
 fi
+
 cd /usr/workspace/
 echo 'Success: ' $PACKAGE >> ${OUT_FILE};
