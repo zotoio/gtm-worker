@@ -26,7 +26,7 @@ else
 fi
 
 # perform deployment
-https_proxy=$HTTP_PROXY no_proxy=$NO_PROXY yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
+https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
 
 # run performance test
 if [[ -f 'artillery.yml' ]]; then

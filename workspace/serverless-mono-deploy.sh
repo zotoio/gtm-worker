@@ -11,8 +11,8 @@ echo "GIT_PR_ID=$GIT_PR_ID"
 echo "SLS_DEPLOY_MODE=$SLS_DEPLOY_MODE"
 echo "SLS_APIGW_ENDPOINT_TYPE=$SLS_APIGW_ENDPOINT_TYPE"
 echo "SLS_APIGW_DOMAIN_SUFFIX=$SLS_APIGW_DOMAIN_SUFFIX"
-echo "HTTP_PROXY=$HTTP_PROXY"
-echo "NO_PROXY=$NO_PROXY"
+echo "SLS_HTTP_PROXY=$SLS_HTTP_PROXY"
+echo "SLS_NO_PROXY=$SLS_NO_PROXY"
 
 OUTDIR="/usr/workspace/clone/output";
 
@@ -62,7 +62,7 @@ else
 fi
 
 cd /usr/workspace/
-export BUILD_COMMAND="https_proxy=$HTTP_PROXY no_proxy=$NO_PROXY yarn"
+export BUILD_COMMAND="https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn --verbose"
 source ./deps.sh
 source ./build.sh
 
