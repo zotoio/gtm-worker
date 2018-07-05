@@ -62,7 +62,7 @@ else
 fi
 
 cd /usr/workspace/
-export BUILD_COMMAND="https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn --verbose"
+export BUILD_COMMAND="https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn --verbose  --ignore-optional"
 source ./deps.sh
 source ./build.sh
 
