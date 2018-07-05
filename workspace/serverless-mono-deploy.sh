@@ -9,7 +9,10 @@ echo "SLS_AWS_STAGE=$SLS_AWS_STAGE"
 echo "GIT_PUSH_BRANCHNAME=$GIT_PUSH_BRANCHNAME"
 echo "GIT_PR_ID=$GIT_PR_ID"
 echo "SLS_DEPLOY_MODE=$SLS_DEPLOY_MODE"
+echo "SLS_APIGW_ENDPOINT_TYPE=$SLS_APIGW_ENDPOINT_TYPE"
 echo "SLS_APIGW_DOMAIN_SUFFIX=$SLS_APIGW_DOMAIN_SUFFIX"
+echo "HTTP_PROXY=$HTTP_PROXY"
+echo "NO_PROXY=$NO_PROXY"
 
 OUTDIR="/usr/workspace/clone/output";
 
@@ -59,7 +62,7 @@ else
 fi
 
 cd /usr/workspace/
-export BUILD_COMMAND=yarn
+export BUILD_COMMAND="https_proxy=$HTTP_PROXY no_proxy=$NO_PROXY yarn"
 source ./deps.sh
 source ./build.sh
 
