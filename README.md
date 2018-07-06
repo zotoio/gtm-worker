@@ -45,4 +45,25 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |GIT_PR_ID| pull request number from PR event|
 |BUILD_TYPE|nodejs or maven or gradle|
 |BUILD_COMMAND|custom build command rather than derived from build type|
+|S3_DEPENDENCY_BUCKET|bucket name to cache node_modules etc|
+GTM_AWS_REGION|aws region env var if not using IAM instance role|
+GTM_AWS_ACCESS_KEY_ID|aws access key env var if not using IAM instance role|
+GTM_AWS_SECRET_ACCESS_KEY|aws secret env var if not using IAM instance role|
+IAM_ENABLED|'true' to use ec2 instance profile|
+AWS_S3_PROXY|proxy used to call s3 api|
+SLS_AWS_STAGE|serverless executor stage|
+SLS_AWS_REGION|serverless executor region|
+SLS_CUSTOM_DOMAIN|custom apigw domain|
+SLS_DEPLOY_MODE|parallel or sequential deploy of multiple lambda packages|
+SLS_APIGW_ENDPOINT_TYPE|EDGE, REGIONAL, or PRIVATE for private vpc endpoint|
+SLS_AWS_EXECUTION_ROLE|role arn for lambda execution|
+SLS_DEPLOYMENT_S3_BUCKET_PREFIX|use a shared bucket prefix for central serverless mgmt|
+SLS_HTTP_PROXY|https_proxy env var for sls build|
+SLS_NO_PROXY|no_proxy env var for sls build|
+SLS_VPC_ID|optional vpc id for serverless deployments|
+SLS_VPC_SECURITY_GROUP_ID|optional security group id for serverless deployments|
+SLS_VPC_SUBNET_A|optional subnet id for serverless deployments|
+SLS_VPC_SUBNET_B|optional subnet id for serverless deployments|
+SLS_VPC_SUBNET_C|optional subnet id for serverless deployments|
+SLS_AWS_KMS_KEY_ID|kms key for sls encrypted env var|
 
