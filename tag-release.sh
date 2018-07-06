@@ -1,5 +1,15 @@
 #!/bin/bash
 
+display_usage() {
+    echo "Please supply a new semver tag - look at .version for last release."
+    echo "eg. ./tag-release.sh.sh 1.6.4"
+}
+
+if [ $# -eq 0 ]; then
+    display_usage
+    exit 1
+fi
+
 echo $1 > .version
 git add .version
 git commit -m "version $1"
