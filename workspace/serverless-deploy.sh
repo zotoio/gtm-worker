@@ -25,7 +25,21 @@ else
     echo "npm script for printing config of $PACKAGE is missing"
 fi
 
-# perform deployment
+# perform pre deployment for alias support
+if grep -q "serverless-aws-alias" /usr/workspace/clone/packages/$PACKAGE/serverless.yml; then
+    # get current state
+    echo "alias plugin detected.."
+    yarn sls-info -v > $OUTDIR/$PACKAGE-pre-info.txt 2>&1
+    # if a message
+    if grep -q "does not exist" $OUTDIR/$PACKAGE-pre-info.txt; then
+        # perform stage alias master alias deployment (required before named alias)
+        # https://github.com/HyperBrain/serverless-aws-alias
+        echo "performing master alias deployment.."
+        https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy >> ${OUT_FILE} 2>&1 || echo "master alias deploy failed $PACKAGE..";
+    fi
+fi
+# deploy the named alias.  if alias plugin is not present, this is just a standard deployment
+echo "performing deployment.."
 https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
 
 # run performance test
