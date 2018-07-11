@@ -29,7 +29,7 @@ fi
 if grep -q "serverless-aws-alias" /usr/workspace/clone/packages/$PACKAGE/serverless.yml; then
     # get current state
     echo "alias plugin detected.."
-    yarn https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY sls-info -v > $OUTDIR/$PACKAGE-pre-info.txt 2>&1
+    https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-info -v > $OUTDIR/$PACKAGE-pre-info.txt 2>&1
     # if a message
     if grep -q "does not exist" $OUTDIR/$PACKAGE-pre-info.txt; then
         # perform stage alias master alias deployment (required before named alias)
