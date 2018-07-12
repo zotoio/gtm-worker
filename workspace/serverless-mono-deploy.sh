@@ -15,9 +15,15 @@ echo "SLS_HTTP_PROXY=$SLS_HTTP_PROXY"
 echo "SLS_NO_PROXY=$SLS_NO_PROXY"
 
 GIT_BRANCH_NAME=`echo "${GIT_PUSH_BRANCHNAME}" | sed 's/refs\/heads\///g'`
-GIT_BRANCH_ALIAS=`echo "${GIT_BRANCH_NAME}" | sed 's/[^[:alnum:]]/-/g'`
+SLS_BRANCH_ALIAS=`echo "${GIT_BRANCH_NAME}" | sed 's/[^[:alnum:]]/-/g'`
+
+# alias names in apigw convert dash to underscore, and we cannot do this
+# for the alias stack name, as it does only support dashes ..
+SLS_APIGW_STAGE_ALIAS=`echo "${SLS_BRANCH_ALIAS}" | sed 's/\-/\_/g'`
 echo "GIT_BRANCH_NAME=$GIT_BRANCH_NAME"
-echo "GIT_BRANCH_ALIAS=$GIT_BRANCH_ALIAS"
+echo "SLS_BRANCH_ALIAS=$SLS_BRANCH_ALIAS"
+echo "SLS_APIGW_STAGE_ALIAS=$SLS_APIGW_STAGE_ALIAS"
+
 
 OUTDIR="/usr/workspace/clone/output";
 
@@ -26,8 +32,9 @@ if [ -d /usr/workspace/clone ]; then
 fi
 
 show_summary () {
+
     cat ${OUTDIR}/*-output.txt | grep 'POST\|GET' | \
-        sed "s/\/${SLS_AWS_STAGE}\//\/${GIT_BRANCH_ALIAS}\//g" \
+        sed "s/\/${SLS_AWS_STAGE}\//\/${SLS_APIGW_STAGE_ALIAS}\//g" \
             > ${OUTDIR}/apigw-endpoints.txt
 
     if [ -f ${OUTDIR}/apigw-endpoints.txt ]; then
@@ -87,7 +94,7 @@ mkdir -p ${OUTDIR}
 if [[ "$SLS_DEPLOY_MODE" = "sequential" ]]; then
     echo "Starting sequential deployment.."
     for PACKAGE in $SLS_AFFECTED_PACKAGES; do
-        source ./serverless-deploy.sh ${PACKAGE}^${GTM_EVENT_ID}^${GIT_BRANCH_ALIAS}^${SLS_AWS_STAGE} \
+        source ./serverless-deploy.sh ${PACKAGE}^${GTM_EVENT_ID}^${SLS_BRANCH_ALIAS}^${SLS_AWS_STAGE} \
             | tee /dev/null 2>&1
     done
     if ls ${OUTDIR}/*-error.txt 1> /dev/null 2>&1; then
@@ -98,7 +105,7 @@ else
     # default is to deploy function in parallel - up to 4 simultaneously
     echo "Starting parallel deployment.."
     for PACKAGE in ${SLS_AFFECTED_PACKAGES[*]}; do
-        echo ${PACKAGE}^${GTM_EVENT_ID}^${GIT_BRANCH_ALIAS}^${SLS_AWS_STAGE};
+        echo ${PACKAGE}^${GTM_EVENT_ID}^${SLS_BRANCH_ALIAS}^${SLS_AWS_STAGE};
     done | xargs -I{} --max-procs 4 ./serverless-deploy.sh {} || handle_error
 fi
 
