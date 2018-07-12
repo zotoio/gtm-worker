@@ -3,6 +3,7 @@
 display_usage() {
     echo "Please supply a new semver tag - look at .version for last release."
     echo "eg. ./tag-release.sh.sh 1.6.4"
+    echo "it looks like the last version was" `cat .version`
 }
 
 if [ $# -eq 0 ]; then
