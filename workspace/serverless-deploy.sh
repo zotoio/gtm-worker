@@ -10,6 +10,8 @@ SLS_AWS_STAGE=$(echo $PACKVARS | cut -f4 -d^);
 echo 'Deploying package' $PACKAGE '..';
 cd /usr/workspace/clone/packages/$PACKAGE;
 
+source /usr/workspace/serverless-package-config.sh $PACKAGE $SLS_AWS_STAGE
+
 # output files
 OUTDIR="/usr/workspace/clone/output";
 OUTPUT_FILENAME_BASE=`date +%Y-%m-%d-%H%M%S`-${GTM_EVENT_ID:0:8}-$PACKAGE;

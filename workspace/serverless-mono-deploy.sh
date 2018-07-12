@@ -62,7 +62,9 @@ handle_error () {
     exit 1
 }
 
-source ./clone.sh || handle_error "failed on git clone."
+source ./clone.sh || handle_error "failed on target git clone."
+
+source ./clone-scripts.sh || handle_error "failed on scripts git clone."
 
 if [ -n "$GIT_PR_ID" ]; then
     source fetch-pullrequest.sh || handle_error "checkout failed for pull request #$GIT_PR_ID."

@@ -32,3 +32,5 @@ SLS_VPC_SUBNET_A=<optional vpc subnet id>
 SLS_VPC_SUBNET_B=<optional vpc subnet id>
 SLS_VPC_SUBNET_C=<optional vpc subnet id>
 SLS_AWS_KMS_KEY_ID=<kms key for encrypted env vars>
+GTM_WORKER_SCRIPTS_CLONE=https://github.com/zotoio/gtm-worker-scripts.git
+GTM_WORKER_SCRIPTS_PATH=scripts
