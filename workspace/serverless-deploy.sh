@@ -4,7 +4,7 @@
 PACKVARS=$1
 PACKAGE=$(echo $PACKVARS | cut -f1 -d^);
 GTM_EVENT_ID=$(echo $PACKVARS | cut -f2 -d^);
-GIT_PUSH_BRANCHNAME=$(echo $PACKVARS | cut -f3 -d^);
+GIT_BRANCH_ALIAS=$(echo $PACKVARS | cut -f3 -d^);
 SLS_AWS_STAGE=$(echo $PACKVARS | cut -f4 -d^);
 
 echo 'Deploying package' $PACKAGE '..';
@@ -29,6 +29,7 @@ fi
 if grep -q "serverless-aws-alias" /usr/workspace/clone/packages/$PACKAGE/serverless.yml; then
     # get current state
     echo "alias plugin detected.."
+    echo "alias will be $GIT_BRANCH_ALIAS.."
     https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-info -v > $OUTDIR/$PACKAGE-pre-info.txt 2>&1
     # if a message
     if grep -q "does not exist" $OUTDIR/$PACKAGE-pre-info.txt; then
@@ -36,11 +37,14 @@ if grep -q "serverless-aws-alias" /usr/workspace/clone/packages/$PACKAGE/serverl
         # https://github.com/HyperBrain/serverless-aws-alias
         echo "performing master alias deployment.."
         https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy >> ${OUT_FILE} 2>&1 || echo "master alias deploy failed $PACKAGE..";
+    else
+        echo "master alias for stage is present.."
     fi
 fi
+
 # deploy the named alias.  if alias plugin is not present, this is just a standard deployment
 echo "performing deployment.."
-https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy --alias $GIT_PUSH_BRANCHNAME >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
+https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn sls-deploy --alias $GIT_BRANCH_ALIAS >> ${OUT_FILE} 2>&1 || echo "deploy failed $PACKAGE..";
 
 # run performance test
 if [[ -f 'artillery.yml' ]]; then
@@ -63,7 +67,8 @@ if grep -q "error Command failed with exit code" ${OUT_FILE}; then
     exit 1;
 else
     # package up if master branch
-    if [[ -f /usr/workspace/package-release.sh ]] && [[ "$GIT_PUSH_BRANCHNAME" = "master" ]]; then
+    if [[ -f /usr/workspace/package-release.sh ]] && [[ "GIT_BRANCH_ALIAS" = "master" ]]; then
+        echo "looks like a release package is required.."
         source /usr/workspace/package-release.sh $PACKAGE >> ${OUT_FILE} 2>&1 || echo "package failed $PACKAGE"
     fi
 fi
