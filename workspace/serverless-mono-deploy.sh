@@ -14,6 +14,11 @@ echo "SLS_APIGW_DOMAIN_SUFFIX=$SLS_APIGW_DOMAIN_SUFFIX"
 echo "SLS_HTTP_PROXY=$SLS_HTTP_PROXY"
 echo "SLS_NO_PROXY=$SLS_NO_PROXY"
 
+GIT_BRANCH_NAME=`echo "${GIT_PUSH_BRANCHNAME}" | sed 's/refs\/heads\///g'`
+GIT_BRANCH_ALIAS=`echo "${GIT_BRANCH_NAME}" | sed 's/[^[:alnum:]]/-/g'`
+echo "GIT_BRANCH_NAME=$GIT_BRANCH_NAME"
+echo "GIT_BRANCH_ALIAS=$GIT_BRANCH_ALIAS"
+
 OUTDIR="/usr/workspace/clone/output";
 
 if [ -d /usr/workspace/clone ]; then
@@ -55,13 +60,11 @@ source ./clone.sh || handle_error "failed on git clone."
 if [ -n "$GIT_PR_ID" ]; then
     source fetch-pullrequest.sh || handle_error "checkout failed for pull request #$GIT_PR_ID."
 else
-    if [ -n "$GIT_PUSH_BRANCHNAME" ]; then
+    if [ -n "$GIT_BRANCH_NAME" ]; then
         cd /usr/workspace/clone
-        git checkout $GIT_PUSH_BRANCHNAME || handle_error "checkout failed for branch $GIT_PUSH_BRANCHNAME."
+        git checkout $GIT_BRANCH_NAME || handle_error "checkout failed for branch $GIT_BRANCH_NAME."
     fi
 fi
-
-GIT_BRANCH_ALIAS=`echo "${GIT_PUSH_BRANCHNAME}" | sed 's/\/refs\/heads\///g' | sed 's/[^[:alnum:]]/-/g'`
 
 cd /usr/workspace/
 export BUILD_COMMAND="https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn --verbose  --ignore-optional"
