@@ -78,6 +78,7 @@ fi
 cd /usr/workspace/
 if [[ "$SLS_VERBOSE" == "true" ]]; then
     YARN_ARGS=" --verbose "
+    SLS_DEBUG=*
 fi
 export BUILD_COMMAND="https_proxy=$SLS_HTTP_PROXY no_proxy=$SLS_NO_PROXY yarn $YARN_ARGS --ignore-optional"
 source ./deps.sh

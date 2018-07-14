@@ -26,6 +26,9 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
 RUN unzip awscli-bundle.zip
 RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
+# ========= JQ ========
+RUN wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O /usr/local/bin/jq
+RUN chmod 755 /usr/local/bin/jq
 
 # ========= JAVA 8 =========
 RUN yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel

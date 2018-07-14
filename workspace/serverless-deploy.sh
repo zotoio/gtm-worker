@@ -69,9 +69,9 @@ if grep -q "error Command failed with exit code" ${OUT_FILE}; then
     exit 1;
 else
     # package up if master branch
-    if [[ -f /usr/workspace/package-release.sh ]] && [[ "GIT_BRANCH_ALIAS" = "master" ]]; then
+    if [[ -f /usr/workspace/serverless-package-release.sh ]] && [[ "$GIT_BRANCH_ALIAS" = "master" ]]; then
         echo "looks like a release package is required.."
-        source /usr/workspace/package-release.sh $PACKAGE >> ${OUT_FILE} 2>&1 || echo "package failed $PACKAGE"
+        source /usr/workspace/serverless-package-release.sh $PACKAGE >> ${OUT_FILE} 2>&1 || echo "package failed $PACKAGE"
     fi
 fi
 
