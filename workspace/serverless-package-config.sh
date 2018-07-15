@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Collect config and write to files/env.  Sensitive values should be pre-encrypted using the
 # kms key your functions are configured to use. ie. GTM_SLS_EXECUTOR_AWS_KMS_KEY_ID
 PACKAGE=$1

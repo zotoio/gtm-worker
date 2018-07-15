@@ -58,11 +58,6 @@ if [[ -f 'artillery.yml' ]]; then
     cat ${PERF_FILE} 2>&1;
 fi
 
-# output results
-cat ${OUT_FILE};
-echo '### ' $PACKAGE ' tail #############' >> ${SUMMARY_FILE};
-tail -25 ${OUT_FILE} >> ${SUMMARY_FILE};
-
 if grep -q "error Command failed with exit code" ${OUT_FILE}; then
     cp ${OUT_FILE} ${ERR_FILE}
     echo 'FAILURE: ' $PACKAGE >> ${OUT_FILE};
@@ -74,6 +69,11 @@ else
         source /usr/workspace/serverless-package-release.sh $PACKAGE >> ${OUT_FILE} 2>&1 || echo "package failed $PACKAGE"
     fi
 fi
+
+# output results
+cat ${OUT_FILE};
+echo '### ' $PACKAGE ' tail #############' >> ${SUMMARY_FILE};
+tail -25 ${OUT_FILE} >> ${SUMMARY_FILE};
 
 cd /usr/workspace/
 echo 'Success: ' $PACKAGE >> ${OUT_FILE};
