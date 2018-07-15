@@ -32,5 +32,7 @@ SLS_VPC_SUBNET_A=<optional vpc subnet id>
 SLS_VPC_SUBNET_B=<optional vpc subnet id>
 SLS_VPC_SUBNET_C=<optional vpc subnet id>
 SLS_AWS_KMS_KEY_ID=<kms key for encrypted env vars>
+SLS_CONFIG_TYPE=<ssm or spring or dotenv>
+SLS_SPRING_CONFIG_ENDPOINT=http://spring:8888
 GTM_WORKER_SCRIPTS_CLONE=https://github.com/zotoio/gtm-worker-scripts.git
 GTM_WORKER_SCRIPTS_PATH=scripts

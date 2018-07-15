@@ -86,10 +86,10 @@ source ./build.sh
 
 if [[ "$SLS_AFFECTED_PACKAGES" == "" ]]; then
     echo "no package deploys directly required"
-    echo "AT LEAST ONE PACKAGE DEPLOYMENT FAILED"
+    echo "ALL DEPLOYS SUCCESSFUL"
     END=`date +%s`
     echo "Execution time was `expr $END - $START` seconds."
-    exit 1
+    exit 0
 fi
 
 echo "OK. It looks like we need to deploy $SLS_AFFECTED_PACKAGES - let's go!"

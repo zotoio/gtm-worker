@@ -66,6 +66,8 @@ docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 |SLS_VPC_SUBNET_B|optional subnet id for serverless deployments|
 |SLS_VPC_SUBNET_C|optional subnet id for serverless deployments|
 |SLS_AWS_KMS_KEY_ID|kms key for sls encrypted env var|
+|SLS_CONFIG_TYPE| config type for sls package vars. 'ssm', 'spring' or 'dotev' (default)|
+|SLS_SPRING_CONFIG_ENDPOINT| endpoint url of spring config server eg. http://spring:8888 if SLS_CONFIG_TYPE is 'spring'|
 |GTM_WORKER_SCRIPTS_CLONE| url of git repo to overlay on workspace eg. https://github.com/zotoio/gtm-worker-scripts.git
 |GTM_WORKER_SCRIPTS_PATH| directory within scripts clone repo to overlay|
 
